@@ -45,22 +45,12 @@
 
 - (void)perform
 {
-  if ([_sender isKindOfClass:[UIBarButtonItem class]])
-  {
-    [_popoverController presentPopoverFromBarButtonItem:(UIBarButtonItem*)_sender
-                               permittedArrowDirections:_arrowDirections
-                                               animated:_animated
-                                                options:_options];
-  }
-  else
-  {
     UIView *view = (UIView *)_sender;
     [_popoverController presentPopoverFromRect:view.bounds
                                         inView:view
                       permittedArrowDirections:_arrowDirections
                                       animated:_animated
                                        options:_options];
-  }
 }
 
 - (WYPopoverController *)popoverControllerWithSender:(id)aSender
