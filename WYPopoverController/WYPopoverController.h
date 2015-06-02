@@ -155,27 +155,6 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
                        options:(WYPopoverAnimationOptions)options
                     completion:(void (^)(void))completion;
 
-// Present popover from bar button items methods
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
-               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
-                               animated:(BOOL)animated;
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
-               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
-                               animated:(BOOL)animated
-                             completion:(void (^)(void))completion;
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
-               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
-                               animated:(BOOL)animated
-                                options:(WYPopoverAnimationOptions)options;
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
-               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
-                               animated:(BOOL)animated
-                                options:(WYPopoverAnimationOptions)options
-                             completion:(void (^)(void))completion;
 
 // Present popover as dialog methods
 

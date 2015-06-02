@@ -1906,53 +1906,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
   }
 }
 
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
-               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
-                               animated:(BOOL)aAnimated {
-  [self presentPopoverFromBarButtonItem:aItem
-               permittedArrowDirections:aArrowDirections
-                               animated:aAnimated
-                             completion:nil];
-}
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
-               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
-                               animated:(BOOL)aAnimated
-                             completion:(void (^)(void))completion {
-  [self presentPopoverFromBarButtonItem:aItem
-               permittedArrowDirections:aArrowDirections
-                               animated:aAnimated
-                                options:WYPopoverAnimationOptionFade
-                             completion:completion];
-}
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
-               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
-                               animated:(BOOL)aAnimated
-                                options:(WYPopoverAnimationOptions)aOptions {
-  [self presentPopoverFromBarButtonItem:aItem
-               permittedArrowDirections:aArrowDirections
-                               animated:aAnimated
-                                options:aOptions
-                             completion:nil];
-}
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
-               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
-                               animated:(BOOL)aAnimated
-                                options:(WYPopoverAnimationOptions)aOptions
-                             completion:(void (^)(void))completion {
-  _barButtonItem = aItem;
-  UIView *itemView = [_barButtonItem valueForKey:@"view"];
-  aArrowDirections = WYPopoverArrowDirectionDown | WYPopoverArrowDirectionUp;
-  [self presentPopoverFromRect:itemView.bounds
-                        inView:itemView
-      permittedArrowDirections:aArrowDirections
-                      animated:aAnimated
-                       options:aOptions
-                    completion:completion];
-}
-
 - (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated {
   [self presentPopoverAsDialogAnimated:aAnimated
                             completion:nil];
@@ -1995,10 +1948,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
       containerViewSize.width = _backgroundView.frame.size.height;
       containerViewSize.height = _backgroundView.frame.size.width;
     }
-
-    //WY_LOG(@"containerView.arrowOffset = %f", containerView.arrowOffset);
-    //WY_LOG(@"containerViewSize = %@", NSStringFromCGSize(containerViewSize));
-    //WY_LOG(@"orientation = %@", WYStringFromOrientation(orientation));
 
     if (arrowDirection == WYPopoverArrowDirectionDown) {
       transform = CGAffineTransformTranslate(transform, _backgroundView.arrowOffset, containerViewSize.height / 2);
@@ -2856,8 +2805,9 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
   }
 
   if (_barButtonItem) {
-    _inView = [_barButtonItem valueForKey:@"view"];
-    _rect = _inView.bounds;
+      
+    // do nothing
+      
   } else if ([_delegate respondsToSelector:@selector(popoverController:willRepositionPopoverToRect:inView:)]) {
     CGRect anotherRect;
     UIView *anotherInView;
