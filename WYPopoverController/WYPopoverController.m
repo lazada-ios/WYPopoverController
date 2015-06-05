@@ -1422,6 +1422,7 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
   UIViewController        *_viewController;
   CGRect                   _rect;
   UIView                  *_inView;
+  UIView                  *_blurView;
   WYPopoverOverlayView    *_overlayView;
   WYPopoverBackgroundView *_backgroundView;
   WYPopoverArrowDirection  _permittedArrowDirections;
@@ -1780,6 +1781,23 @@ static WYPopoverTheme *defaultTheme_ = nil;
       _rect = CGRectMake((int)_inView.bounds.size.width / 2 - 5, (int)_inView.bounds.size.height / 2 - 5, 10, 10);
     }
   }
+    
+    // blur view setup
+
+    UIView *blurView = [[UIView alloc] initWithFrame:_inView.window.bounds];
+
+    if([UIBlurEffect class]) { // iOS 8
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        blurView.frame = _inView.frame;
+        
+    } else { // workaround for iOS 7
+        blurView = [[UIToolbar alloc] initWithFrame:_inView.bounds];
+    }
+
+    [_inView.window addSubview:blurView];
+
+    _blurView = blurView;
 
   CGSize contentViewSize = self.popoverContentSize;
 
@@ -2368,6 +2386,9 @@ static WYPopoverTheme *defaultTheme_ = nil;
       strongSelf->_backgroundView = nil;
 
       [strongSelf->_overlayView removeFromSuperview];
+      strongSelf->_overlayView = nil;
+        
+      [strongSelf->_blurView removeFromSuperview];
       strongSelf->_overlayView = nil;
 
       // inView is captured strongly in presentPopoverInRect:... method, so it needs to be released in dismiss method to avoid potential retain cycles
