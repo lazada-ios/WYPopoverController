@@ -1783,22 +1783,22 @@ static WYPopoverTheme *defaultTheme_ = nil;
   }
     
     // blur view setup
-
+    
     UIView *blurView = [[UIView alloc] initWithFrame:_inView.window.bounds];
-
+        
     if([UIBlurEffect class]) { // iOS 8
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
         blurView.frame = _inView.frame;
-        
+            
     } else { // workaround for iOS 7
-        blurView = [[UIToolbar alloc] initWithFrame:_inView.bounds];
+        blurView = [[UIToolbar alloc] initWithFrame:_inView.frame];
     }
-
+        
     [_inView.window addSubview:blurView];
-
+    
     _blurView = blurView;
-
+    
   CGSize contentViewSize = self.popoverContentSize;
 
   if (_overlayView == nil) {
@@ -1807,7 +1807,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     _overlayView.autoresizesSubviews = NO;
     _overlayView.delegate = self;
     _overlayView.passthroughViews = _passthroughViews;
-
+      
     _backgroundView = [[WYPopoverBackgroundView alloc] initWithContentSize:contentViewSize];
     _backgroundView.appearing = YES;
 
@@ -1874,6 +1874,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     if ((options & WYPopoverAnimationOptionFade) == WYPopoverAnimationOptionFade) {
       _overlayView.alpha = 0;
       _backgroundView.alpha = 0;
+      _blurView.alpha = 0;
     }
 
     CGAffineTransform endTransform = _backgroundView.transform;
@@ -1888,6 +1889,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
 
       if (strongSelf) {
         strongSelf->_overlayView.alpha = 1;
+        strongSelf->_blurView.alpha = 1;
         strongSelf->_backgroundView.alpha = strongSelf->_backgroundView.preferredAlpha;
         strongSelf->_backgroundView.transform = endTransform;
       }
